@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="오늘의 종합 정보">
+    <meta property="og:description" content="외출할 땐 오늘의 정보를 보고 나가야지!">
+    <meta property="og:image" content="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/free_myprofile/%EB%B3%B4%EB%9D%BC+%EB%A5%B4%ED%83%84%EC%9D%B4/%EB%B3%B4%EB%9D%BC%EB%A5%B4%ED%83%84_%ED%94%84%EB%A1%9C%ED%95%84.png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/free/sparta.js"></script>
+    <title>오늘의 정보</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <style>
+         *{
+             font-family: 'Jua', sans-serif;
+         }
+
+        body {
+            background-color: #bbfabd;
+            height: 100vh;
+            background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/free_myprofile/%EB%B3%B4%EB%9D%BC+%EB%A5%B4%ED%83%84%EC%9D%B4/%EB%B0%98%EC%A7%9D%EC%9D%B4.png');
+        }
+        .profile {
+            width: 100px;
+            height: 100px;
+            border-radius: 100%;
+            border: 2px solid #e6fa8f;
+            background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/free_myprofile/%EB%B3%B4%EB%9D%BC+%EB%A5%B4%ED%83%84%EC%9D%B4/%EB%B3%B4%EB%9D%BC%EB%A5%B4%ED%83%84_%ED%94%84%EB%A1%9C%ED%95%84.png');
+            background-position: center;
+            background-size: cover;
+        }
+        .main {
+            color : saddlebrown;
+            font-size: 25px;
+            font-weight: bold;
+            size : 20px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        .sub {
+            color :saddlebrown;
+            font-size: 17px;
+            font-weight: 400;
+            size : 14px;
+            margin-top: 0px;
+            margin-bottom: 0px;
+        }
+        .wrap {
+            width: 300px;
+            margin: 30px auto 10px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+        }
+        .bigbutton {
+            width: 320px;
+            height: 59px;
+            border-radius: 100px;
+            background-color: white;
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: bold;
+            color: gray;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0px 2px 8px rgba(152, 151, 185, 0.24) ;
+        }
+        .minibutton {
+            width: 152px;
+            height: 59px;
+            border-radius: 100px;
+            background-color: white;
+            font-size: 20px;
+            font-weight: bold;
+            color: gray;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            box-shadow: 0px 2px 8px rgba(152, 151, 185, 0.24);
+            margin: 0px 8px 17px 8px;
+        }
+        .buttons {
+            display: flex;
+        }
+        .buttons1{
+            display: flex;
+        }
+        .wrap > a:hover {
+            background-color: #e6fa8f;
+            color: #b96e1f;
+        }
+        .buttons > a:hover {
+            background-color: #e6fa8f;
+            color: #b96e1f;
+        }
+        .buttons1 > a:hover {
+            background-color: #e6fa8f;
+            color: #b96e1f;
+        }
+        .bigbutton:hover {
+            background-color: #e6fa8f;
+            color: #b96e1f;
+        }
+        .rtan {
+            width: 100px;
+            height: 170px;
+            background-image: url('https://s3.ap-northeast-2.amazonaws.com/materials.spartacodingclub.kr/free_myprofile/%EB%B3%B4%EB%9D%BC+%EB%A5%B4%ED%83%84%EC%9D%B4/%EC%95%89%EC%95%84%EC%9E%88%EB%8A%94%EB%A5%B4%ED%83%84.png');
+            background-position: center;
+            background-size: cover;
+position: absolute;
+            bottom:-10px;
+            margin-right: 350px;
+
+        }
+        .pink {
+            width: 100%;
+            height: 120px;
+            background-color: #e6fa8f;
+            bottom : -100px;
+            margin:auto;
+position: absolute;
+
+        }
+        .weather{
+            margin-top: 0px;
+            margin-left: 0px;
+            max-width: 300px;
+            width:95%;
+            font-weight: bolder;
+            font-size: x-large;
+            color: green;
+
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "http://spartacodingclub.shop/sparta_api/weather/seoul",
+                data: {},
+                success: function (response) {
+                    let url = response['url']
+                    let temp = response['temp']
+                    $('#icon').attr("src", url)
+                    $('#temp').text(temp)
+                    if(temp>28){
+                        alert('날이 더워요. 마실 물을 충분히 챙겨가세요!!')
+                    }
+                    else{
+                        alert('날이 적당하네요. 좋은 하루되세요!!')
+                    }
+                }
+            })
+        });
+    </script>
+</head>
+<body>
+    <div class="wrap">
+        <div class="profile"></div>
+        <h1 class="main">오늘의 정보</h1>
+        <p class="sub">출근 전 반드시 알아야만 하는 정보를</p>
+            <p class="sub">한번에 알려드릴게요!</p>
+        <div class="weather">
+    <p><img id="icon" width="35" src="http://openweathermap.org/img/w/10d.png"/>  현재기온 :<span id="temp">'''</span>도</p>
+        </div>
+        <div class="buttons">
+            <a class="minibutton" target="_blank" href="https://finance.naver.com/marketindex/?tabSel=exchange#tab_section">출근길 환율</a>
+            <a class="minibutton"target="_blank" href="https://finance.naver.com/sise/">출근길 국내증시</a>
+        </div>
+        <div class="buttons1">
+            <a class="minibutton" target="_blank" href="https://topis.seoul.go.kr/map/openControlMap.do">출근길 교통정보</a>
+            <a class="minibutton"target="_blank" href="https://news.naver.com/">출근길 이슈</a>
+        </div>
+        <a class="bigbutton"target="_blank" href="https://www.bikeseoul.com/app/station/moveStationRealtimeStatus.do">잠깐! 따릉이를 사용하실 건가요?</a>
+        <div class="pink"></div>
+        <div class="rtan"></div>
+    </div>
+</body>
+</html>
